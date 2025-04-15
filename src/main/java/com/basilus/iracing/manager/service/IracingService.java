@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -24,10 +26,17 @@ import java.util.Base64;
 public class IracingService {
 
     @Inject
+    @RestClient
     IracingApiClient iracingApiClient;
 
     @Inject
     CacheLinkResolver cacheLinkResolver;
+
+    @ConfigProperty(name = "iracing.login")
+    String iracingLogin;
+
+    @ConfigProperty(name = "iracing.password")
+    String iracingPassword;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -44,7 +53,11 @@ public class IracingService {
      * @param password User's iRacing password (plain text)
      * @return Authentication response from the API as JSON
      */
-    public String authenticate(String email, String password) {
+    public String authenticate() {
+        return authenticate(iracingLogin, iracingPassword);
+    }
+
+    private String authenticate(String email, String password) {
         try {
             String hashedPassword = generateHashedPassword(email, password);
             Response response = iracingApiClient.authenticate(email, hashedPassword);
