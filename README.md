@@ -7,13 +7,13 @@ A Quarkus-based RESTful API for interacting with the iRacing service, providing 
 ## Features
 
 - **Race Tracking System**: Automatically tracks race changes for members
-  - Scheduled hourly checks
-  - Detects new races, wins, and top 5 finishes
+    - Scheduled hourly checks
+    - Detects new races, wins, and top 5 finishes
 - **REST API endpoints** for:
-  - Member tracking management
-  - Race statistics retrieval 
-  - League information
-  - Championship data
+    - Member tracking management
+    - Race statistics retrieval
+    - League information
+    - Championship data
 - **Authentication** with iRacing via cookie management
 
 ## Getting Started
